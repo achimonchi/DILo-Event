@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar DOM</title>
+    <style>
+        img{
+            transition: .5s;
+            transform: translateX(0px);
+        }
+
+        img.images{
+            transform: translateX(50px);
+        }
+
+        .img{
+            overflow: hidden;
+            width: 200px;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- <button onclick="hide()" id="minus">-</button>
+    <span id="counter"></span>
+    <button onclick="show()" id="plus">+</button> -->
+    <h3>User : <span id="user"></span></h3>
+    <h3>Password : <span id="pass"></span></h3>
+    <br>
+    <form onsubmit="handleLogin(event)" action="" method="GET">
+        <label for="">Username</label>
+        <input onkeyup="handleUsername()" type="text" name="username" id="username">
+        <br>
+        <label for="">Password</label>
+        <input onkeyup="handlePassword()" type="password" name="password" id="password">
+        <br>
+        <label for="">Pulau</label>
+        <select name="island" id="island">
+            <option value="sumatra">Sumatra</option>
+            <option value="jawa">Jawa</option>
+            <option value="papua">Papua</option>
+            <option value="kalimantan">Kalimantan</option>
+            <option value="sulawesi">Sulawesi</option>
+        </select>
+        <select name="city" id="city">
+            <option value="">---- Pilih Pulau -----</option>
+        </select>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    <br>
+    <br>
+    <div class="img">
+        <img id="image" onmouseout="handleZoomOut()" onmouseover="handleZoom()" width="200px" src="https://assets.pikiran-rakyat.com/crop/190x94:735x545/x/photo/2020/07/04/3944835781.jpg" alt="">
+    </div>
+    <script>
+
+        handleZoom=()=>{
+            let img = document.getElementById("image");
+            img.classList.add("images");
+        }
+
+        document.getElementsByClassName("img")[0].setAttribute("id","img-attribute")
+
+        handleZoomOut=()=>{
+            let img = document.getElementById("image");
+            img.classList.remove("images");
+            
+        }
+        // let counter = document.getElementById("counter");
+        // let count = 0;
+        // counter.innerHTML = count;
+        // let plus = document.getElementById("plus");
+        // let minus = document.getElementById("minus");
+
+        // plus.addEventListener("click", function(){
+        //     // count++;
+        //     // counter.innerHTML = count;
+        //     counter.style.display = "initial";
+        // })
+
+        // minus.addEventListener("click",function(){
+        //     // count--;
+        //     // counter.innerHTML = count;
+        //     counter.style.display = "none";
+        // })
+            
+        let islands = {
+            sumatra : ["Pekanbaru", "Medan", "Jambi", "Palembang", "Padang", "Aceh"],
+            jawa : ["Jakarta", "Bandung", "Yogyakarta", "Semarang"],
+            kalimantan : ["Banjarmasin","Sintang","Palangkaraya","Samarinda"],
+            sulawesi : ["Makasar","Gowa","Talo"],
+            papua : ["Jayapura","Merauke"]
+        };
+
+
+        let cityElement = document.getElementById("city");
+
+        // handleChangeIsland=()=>{
+        //     let island = document.getElementById("island").value;
+        //     cityElement.innerHTML = "";
+        //     createCity(island);
+        // }
+
+        let island = document.getElementById("island");
+        island.addEventListener("change",()=>{
+            cityElement.innerHTML = "";
+            cityElement.setAttribute("required", "true");
+            createCity(island.value);
+        })
+
+
+        createCity=(island)=>{
+            let cities = islands[island];
+            cityElement.innerHTML = "<option value=''>Pilih Kota</option>";
+            cities.map((city)=>{
+                cityElement.innerHTML += "<option value='"+city+"'>"+city+"</option>"
+            })
+
+            
+
+        }
+
+        
+
+        handleUsername=()=>{
+            let username = document.getElementById("username").value;
+            document.getElementById("user").innerHTML = username;
+            console.log(username)
+        }
+
+        handlePassword=()=>{
+            let password = document.getElementById("password").value;
+            document.getElementById("pass").innerHTML = password;
+            console.log(password)
+        }
+
+        handleLogin=(event)=>{
+            event.preventDefault();
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let flag = true;
+            if(password.length < 5){
+                alert("password kurang panjang")
+                flag = false;
+            }
+
+            if(username.length < 5){
+                alert("username kurang panjang")
+                flag=false;
+            }
+
+            if(password.length >= 5 && username.length >= 5){
+                flag = true;
+            }
+
+            if(flag === true){
+                alert("success");
+            }
+
+            console.log(username, password)
+        }
+
+        show=()=>{
+            counter.style.display = "initial";
+        }
+
+        hide=()=>{
+            counter.style.display = "none";
+        }
+    </script>
+</body>
+</html>
